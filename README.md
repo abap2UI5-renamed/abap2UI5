@@ -3,9 +3,9 @@
 Fork this repository to automatically rename the namespace of abap2UI5.
 
 ### Features
-* Rename abap2UI5 to your customer namespace, e.g., /YYY/u5 or /YYY/2ui5.
-* Rename abap2UI5 to create versions for different departments, e.g., z2ui5_mm, z2ui5_pp, etc.
-* Rename abap2UI5 to create release-specific versions, e.g., z2ui5_124, z2ui5_125, etc.
+* create a version for your customer namespace, e.g., /YYY/u5 or /YYY/2ui5.
+* create versions for different departments, e.g., z2ui5_mm, z2ui5_pp, etc.
+* create release-specific versions, e.g., z2ui5_124, z2ui5_125, etc.
 
 After renaming, you can also install abap2UI5 multiple times in the same system.
 
