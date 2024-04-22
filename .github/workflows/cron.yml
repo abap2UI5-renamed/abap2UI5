@@ -20,8 +20,6 @@ jobs:
       run: |
         npm ci
         npm run mirror
-        git commit -a
-        git push origin main
         git status
     - name: Open PR
       uses: peter-evans/create-pull-request@v4
