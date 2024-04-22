@@ -106,6 +106,7 @@ CLASS z5ui5_cl_xml_view_cc DEFINITION
         !type         TYPE clike OPTIONAL
         !text         TYPE clike OPTIONAL
         !icon         TYPE clike OPTIONAL
+        !tooltip      TYPE clike OPTIONAL
         !columnconfig TYPE clike OPTIONAL
       RETURNING
         VALUE(result) TYPE REF TO z5ui5_cl_xml_view .
@@ -439,6 +440,7 @@ CLASS z5ui5_cl_xml_view_cc IMPLEMENTATION.
                                 ( n = `text`            v = text )
                                 ( n = `icon`            v = icon )
                                 ( n = `type`            v = type )
+                                ( n = `tooltip`         v = tooltip )
                                 ( n = `columnconfig`    v = columnconfig )
               ) ).
 
