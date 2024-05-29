@@ -19,8 +19,5 @@ After renaming, you can also install abap2UI5 multiple times in the same system.
 ### Credits
 Thank you to [larshp](https://github.com/larshp) and the tool abaplint processing the renaming and [christianguenter2](https://github.com/christianguenter2) for adjusting abap2UI5 and setting this up.
 
-### TODO
-* https://github.com/abap2UI5/abap2UI5/issues/1087
-
 ### More
 * Automagic standalone renaming of ABAP objects [(SCN - 20.02.2021)](https://community.sap.com/t5/application-development-blog-posts/automagic-standalone-renaming-of-abap-objects/ba-p/13499851)
