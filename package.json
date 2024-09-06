@@ -1,13 +1,13 @@
 {
   "name": "demo_rename",
   "version": "1.0.0",
-  "description": "Test rename",
+  "description": "Example Renaming Magic",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/christianguenter2/demo_rename.git"
+    "url": "git+https://github.com/abap2UI5/mirror-demo-abap2UI5"
   },
   "license": "MIT",
-  "homepage": "https://github.com/christianguenter2/demo_rename#readme",
+  "homepage": "https://github.com/abap2UI5/mirror-demo-abap2UI5#readme",
   "dependencies": {
     "@abaplint/cli": "^2.106.8"
   },
