@@ -4,6 +4,9 @@ CLASS z5ui5_cl_http_handler DEFINITION
 
   PUBLIC SECTION.
 
+
+
+
     CLASS-METHODS http_post
       IMPORTING
         val           TYPE string
