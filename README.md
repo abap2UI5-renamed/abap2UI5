@@ -1,6 +1,6 @@
 # abap2UI5 Mirror Renamed
 
-This repository demonstrates the automagic renaming functionality. Fork this repository and automatically rename the namespace of abap2UI5.
+This repository demonstrates the automagic namespace renaming functionality. Fork this repository and automatically rename the namespace of abap2UI5.
 
 ### Features
 * create a version for your customer namespace, e.g., /YYY/u5 or /YYY/2ui5.
