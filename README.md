@@ -11,7 +11,7 @@ After renaming, you can also install abap2UI5 multiple times in the same system.
 
 ### Usage
 1. Fork this repository
-2. Set your new namespace here: https://github.com/oblomov-dev/dev-abap2UI5_mirror/blob/047d9fe9e39a7e8b28e058e8775fa923d74c7d42/abaplint_rename.json#L17
+2. Set your new namespace [here.](https://github.com/abap2UI5/abap2UI5-mirror-renamed/blob/main/abaplint_rename.json#L16-L17)
 3. Run `npm run mirror` to mirror [abap2UI5](https://github.com/abap2UI5/abap2UI5) and rename `z2ui5` to `z5ui5`
 4. Pull the repository with abapGit
 5. (Optional) setup a github action to automate this process
