@@ -11,10 +11,10 @@ After renaming, you can also install abap2UI5 multiple times in the same system.
 
 ### Usage
 1. Fork this repository
-2. Set your new namespace [here.](https://github.com/abap2UI5/abap2UI5-mirror-renamed/blob/main/abaplint_rename.json#L16-L17)
-3. Run `npm run mirror` to mirror [abap2UI5](https://github.com/abap2UI5/abap2UI5) and rename `z2ui5` to `z5ui5`
+2. Set your new namespace [here](https://github.com/abap2UI5/abap2UI5-mirror-renamed/blob/main/abaplint_rename.json#L16-L17)
+3. Run `npm run mirror` to mirror [abap2UI5](https://github.com/abap2UI5/abap2UI5) and rename for example `z2ui5` to `/2U5/TEST`
 4. Pull the repository with abapGit
-5. (Optional) setup a github action to automate this process
+5. (Optional) setup a [github action](https://github.com/abap2UI5/abap2UI5-mirror-renamed/blob/main/.github/workflows/cron.yml) to automate this process
 
 ### Credits
 Thank you to [larshp](https://github.com/larshp) and the tool abaplint processing the renaming and [christianguenter2](https://github.com/christianguenter2) for adjusting abap2UI5 and setting this up.
