@@ -96,7 +96,7 @@ CLASS /2u5/test_cl_abap_api DEFINITION
         iv_classname  TYPE clike
         iv_methodname TYPE clike
       RETURNING
-        VALUE(result)  TYPE string_table.
+        VALUE(result) TYPE string_table.
 
     CLASS-METHODS uuid_get_c32
       RETURNING
@@ -110,35 +110,35 @@ CLASS /2u5/test_cl_abap_api DEFINITION
       IMPORTING
         i_data_element_name TYPE string
       RETURNING
-        VALUE(result)        TYPE ty_s_data_element_text.
+        VALUE(result)       TYPE ty_s_data_element_text.
 
     CLASS-METHODS conv_decode_x_base64
       IMPORTING
-        val          TYPE string
+        val           TYPE string
       RETURNING
         VALUE(result) TYPE xstring.
 
     CLASS-METHODS conv_encode_x_base64
       IMPORTING
-        val          TYPE xstring
+        val           TYPE xstring
       RETURNING
         VALUE(result) TYPE string.
 
     CLASS-METHODS conv_get_string_by_xstring
       IMPORTING
-        val          TYPE xstring
+        val           TYPE xstring
       RETURNING
         VALUE(result) TYPE string.
 
     CLASS-METHODS conv_get_xstring_by_string
       IMPORTING
-        val          TYPE string
+        val           TYPE string
       RETURNING
         VALUE(result) TYPE xstring.
 
     CLASS-METHODS rtti_get_classes_impl_intf
       IMPORTING
-        val          TYPE clike
+        val           TYPE clike
       RETURNING
         VALUE(result) TYPE ty_t_classes.
 
@@ -235,7 +235,8 @@ CLASS /2u5/test_cl_abap_api IMPLEMENTATION.
 
     TRY.
 
-        CALL METHOD ('CL_WEB_HTTP_UTILITY')=>('DECODE_X_BASE64')
+        DATA(lv_web_http_name) = 'CL_WEB_HTTP_UTILITY'.
+        CALL METHOD (lv_web_http_name)=>('DECODE_X_BASE64')
           EXPORTING
             encoded = val
           RECEIVING
@@ -259,7 +260,8 @@ CLASS /2u5/test_cl_abap_api IMPLEMENTATION.
 
     TRY.
 
-        CALL METHOD ('CL_WEB_HTTP_UTILITY')=>('ENCODE_X_BASE64')
+        DATA(lv_web_http_name) = 'CL_WEB_HTTP_UTILITY'.
+        CALL METHOD (lv_web_http_name)=>('ENCODE_X_BASE64')
           EXPORTING
             unencoded = val
           RECEIVING
@@ -284,7 +286,8 @@ CLASS /2u5/test_cl_abap_api IMPLEMENTATION.
     DATA conv TYPE REF TO object.
 
     TRY.
-        CALL METHOD ('CL_ABAP_CONV_CODEPAGE')=>create_in
+        DATA(conv_codepage) = 'CL_ABAP_CONV_CODEPAGE'.
+        CALL METHOD (conv_codepage)=>create_in
           RECEIVING
             instance = conv.
 
@@ -318,7 +321,8 @@ CLASS /2u5/test_cl_abap_api IMPLEMENTATION.
     DATA conv TYPE REF TO object.
 
     TRY.
-        CALL METHOD ('CL_ABAP_CONV_CODEPAGE')=>create_out
+        DATA(conv_codepage) = 'CL_ABAP_CONV_CODEPAGE'.
+        CALL METHOD (conv_codepage)=>create_out
           RECEIVING
             instance = conv.
 
@@ -359,7 +363,8 @@ CLASS /2u5/test_cl_abap_api IMPLEMENTATION.
         DATA(lv_class)  = to_upper( iv_classname ).
         DATA(lv_method) = to_upper( iv_methodname ).
 
-        CALL METHOD ('XCO_CP_ABAP')=>('CLASS')
+        DATA(xco_cp_abap) = 'XCO_CP_ABAP'.
+        CALL METHOD (xco_cp_abap)=>('CLASS')
           EXPORTING
             iv_name  = lv_class
           RECEIVING
@@ -432,7 +437,7 @@ CLASS /2u5/test_cl_abap_api IMPLEMENTATION.
     FIELD-SYMBOLS <any> TYPE any.
     DATA lt_implementation_names TYPE string_table.
     TYPES BEGIN OF ty_s_impl.
-    TYPES clsname TYPE c LENGTH 30.
+    TYPES clsname    TYPE c LENGTH 30.
     TYPES refclsname TYPE c LENGTH 30.
     TYPES END OF ty_s_impl.
     DATA lt_impl TYPE STANDARD TABLE OF ty_s_impl WITH DEFAULT KEY.
@@ -449,7 +454,8 @@ CLASS /2u5/test_cl_abap_api IMPLEMENTATION.
 
         ls_clskey-clsname = val.
 
-        CALL METHOD ('XCO_CP_ABAP')=>interface
+        DATA(xco_cp_abap) = 'XCO_CP_ABAP'.
+        CALL METHOD (xco_cp_abap)=>interface
           EXPORTING
             iv_name      = ls_clskey-clsname
           RECEIVING
@@ -476,7 +482,7 @@ CLASS /2u5/test_cl_abap_api IMPLEMENTATION.
                    ( classname   = implementation_name
                      description = rtti_get_class_descr_on_cloud( implementation_name ) ) ).
 
-      CATCH cx_root INTO DATA(lx).
+      CATCH cx_root.
 
         ls_key-intkey = val.
 
@@ -517,7 +523,7 @@ CLASS /2u5/test_cl_abap_api IMPLEMENTATION.
           ASSERT sy-subrc = 0.
 
           INSERT
-            VALUE #( classname = lr_impl->clsname
+            VALUE #( classname   = lr_impl->clsname
                      description = <description> )
             INTO TABLE result.
         ENDLOOP.
@@ -584,7 +590,8 @@ CLASS /2u5/test_cl_abap_api IMPLEMENTATION.
 
       CATCH cx_root.
         TRY.
-            CALL METHOD ('XCO_CP_ABAP_DICTIONARY')=>('DATA_ELEMENT')
+            DATA(xco_cp_abap_dictionary) = 'XCO_CP_ABAP_DICTIONARY'.
+            CALL METHOD (xco_cp_abap_dictionary)=>('DATA_ELEMENT')
               EXPORTING
                 iv_name         = data_element_name
               RECEIVING
@@ -707,7 +714,9 @@ CLASS /2u5/test_cl_abap_api IMPLEMENTATION.
     DATA lv_classname TYPE c LENGTH 30.
 
     lv_classname = i_classname.
-    CALL METHOD ('XCO_CP_ABAP')=>('CLASS')
+
+    DATA(xco_cp_abap) = 'XCO_CP_ABAP'.
+    CALL METHOD (xco_cp_abap)=>('CLASS')
       EXPORTING
         iv_name  = lv_classname
       RECEIVING
@@ -722,7 +731,6 @@ CLASS /2u5/test_cl_abap_api IMPLEMENTATION.
         rv_short_description = result.
 
   ENDMETHOD.
-
 
 
   METHOD rtti_get_t_attri_on_prem.
