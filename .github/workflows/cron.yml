@@ -18,8 +18,8 @@ jobs:
         node-version: '16'
     - name: run
       run: |
-        npm ci
-        npm run mirror
+        npm run init
+        npm run main
         git status
     - name: Open PR
       uses: peter-evans/create-pull-request@v4
