@@ -1,4 +1,4 @@
-# abap2UI5 Mirror - Renamed Namespace
+# abap2UI5 with Renamed Namespace
 
 This repository demonstrates the automagic namespace renaming functionality. Fork this repository and automatically rename the namespace of abap2UI5.
 
