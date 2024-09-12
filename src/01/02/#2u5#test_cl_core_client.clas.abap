@@ -1,6 +1,5 @@
 CLASS /2u5/test_cl_core_client DEFINITION
   PUBLIC
-  FINAL
   CREATE PUBLIC .
 
   PUBLIC SECTION.
@@ -258,6 +257,7 @@ CLASS /2u5/test_cl_core_client IMPLEMENTATION.
   METHOD /2u5/test_if_client~view_display.
 
     mo_action->ms_next-s_set-s_view-xml = val.
+    mo_action->ms_next-s_set-s_view-t_config = t_config.
 
   ENDMETHOD.
 

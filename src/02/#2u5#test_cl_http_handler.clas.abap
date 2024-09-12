@@ -49,9 +49,13 @@ CLASS /2u5/test_cl_http_handler IMPLEMENTATION.
 
   METHOD main.
 
-    result = SWITCH #( body
-     WHEN `` THEN http_get( config )
-     ELSE http_post( body ) ).
+    IF body IS INITIAL.
+      DATA(lo_get) = NEW /2u5/test_cl_core_http_get( config ).
+      result = lo_get->main( ).
+    ELSE.
+      DATA(lo_post) = NEW /2u5/test_cl_core_http_post( body ).
+      result = lo_post->main( ).
+    ENDIF.
 
   ENDMETHOD.
 

@@ -146,6 +146,7 @@ CLASS /2u5/test_cl_xml_view DEFINITION
     METHODS table
       IMPORTING !id                 TYPE clike OPTIONAL
                 items               TYPE clike OPTIONAL
+                class               TYPE clike OPTIONAL
                 growing             TYPE clike OPTIONAL
                 growingthreshold    TYPE clike OPTIONAL
                 growingscrolltoload TYPE clike OPTIONAL
@@ -166,6 +167,24 @@ CLASS /2u5/test_cl_xml_view DEFINITION
                 !visible            TYPE clike OPTIONAL
                   PREFERRED PARAMETER items
       RETURNING VALUE(result)       TYPE REF TO /2u5/test_cl_xml_view.
+
+    METHODS analytical_table
+      IMPORTING !ns           TYPE clike OPTIONAL
+                selectionmode TYPE clike OPTIONAL
+                rowmode       TYPE clike OPTIONAL
+                toolbar       TYPE clike OPTIONAL
+                columns       TYPE clike OPTIONAL
+      RETURNING VALUE(result) TYPE REF TO /2u5/test_cl_xml_view.
+
+    METHODS rowmode
+      IMPORTING !ns           TYPE clike OPTIONAL
+      RETURNING VALUE(result) TYPE REF TO /2u5/test_cl_xml_view.
+
+
+    METHODS auto
+      IMPORTING !ns              TYPE clike OPTIONAL
+                rowcontentheight TYPE clike OPTIONAL
+      RETURNING VALUE(result)    TYPE REF TO /2u5/test_cl_xml_view.
 
     METHODS message_strip
       IMPORTING !text            TYPE clike OPTIONAL
@@ -646,6 +665,11 @@ CLASS /2u5/test_cl_xml_view DEFINITION
       RETURNING VALUE(result) TYPE REF TO /2u5/test_cl_xml_view.
 
     METHODS columns
+      IMPORTING !ns           TYPE clike OPTIONAL
+      RETURNING VALUE(result) TYPE REF TO /2u5/test_cl_xml_view.
+
+    METHODS analytical_column
+      IMPORTING !ns           TYPE clike OPTIONAL
       RETURNING VALUE(result) TYPE REF TO /2u5/test_cl_xml_view.
 
     METHODS column
@@ -1528,7 +1552,7 @@ CLASS /2u5/test_cl_xml_view DEFINITION
                 !id              TYPE clike OPTIONAL
                 !visible         TYPE clike OPTIONAL
                 !enabled         TYPE clike OPTIONAL
-                PREFERRED PARAMETER selected_key
+                  PREFERRED PARAMETER selected_key
       RETURNING VALUE(result)    TYPE REF TO /2u5/test_cl_xml_view.
 
     METHODS checkbox
@@ -4730,7 +4754,8 @@ CLASS /2u5/test_cl_xml_view IMPLEMENTATION.
 
 
   METHOD columns.
-    result = _generic( `columns` ).
+    result = _generic( ns   = ns
+                       name = `columns` ).
   ENDMETHOD.
 
 
@@ -5416,10 +5441,6 @@ CLASS /2u5/test_cl_xml_view IMPLEMENTATION.
                     v = `sap.ui.core.mvc` ) INTO TABLE result->mt_prop.
     INSERT VALUE #( n = `xmlns:core`
                     v = `sap.ui.core` ) INTO TABLE result->mt_prop.
-    INSERT VALUE #( n = `xmlns:table`
-                    v = `sap.ui.table` ) INTO TABLE result->mt_prop.
-    INSERT VALUE #( n = `xmlns:unified`
-                    v = `sap.ui.unified` ) INTO TABLE result->mt_prop.
 
   ENDMETHOD.
 
@@ -8681,6 +8702,7 @@ CLASS /2u5/test_cl_xml_view IMPLEMENTATION.
                        t_prop = VALUE #(
                            ( n = `items`            v = items )
                            ( n = `headerText`       v = headertext )
+                           ( n = `class`            v = class )
                            ( n = `growing`          v = growing )
                            ( n = `growingThreshold` v = growingthreshold )
                            ( n = `growingScrollToLoad` v = growingscrolltoload )
@@ -9056,8 +9078,8 @@ CLASS /2u5/test_cl_xml_view IMPLEMENTATION.
 
 
   METHOD toolbar.
-
-    result = _generic( name   = `Toolbar`
+    DATA(lv_name) = COND #( WHEN ns = 'table' THEN 'toolbar' ELSE `Toolbar` ).
+    result = _generic( name   = lv_name
                        ns     = ns
                        t_prop = VALUE #( ( n = `active`  v = /2u5/test_cl_util=>boolean_abap_2_json( active ) )
                                          ( n = `ariaHasPopup`  v = ariahaspopup )
@@ -9679,7 +9701,6 @@ CLASS /2u5/test_cl_xml_view IMPLEMENTATION.
 
 
   METHOD xml_get.
-    DATA lt_prop TYPE /2u5/test_if_types=>ty_t_name_value.
 
     CASE mv_name.
       WHEN `ZZPLAIN`.
@@ -9690,68 +9711,61 @@ CLASS /2u5/test_cl_xml_view IMPLEMENTATION.
 
     IF me = mo_root.
 
+      DATA lt_prop TYPE HASHED TABLE OF /2u5/test_if_types=>ty_s_name_value WITH UNIQUE KEY n.
       lt_prop = VALUE #(
-          ( n = `xmlns:z2ui5`        v = `z2ui5` )
-          ( n = `xmlns:layout`       v = `sap.ui.layout` )
-*                       ( n = `core:require` v = `{ MessageToast: 'sap/m/MessageToast' }` )
-*                       ( n = `core:require` v = `{ URLHelper: 'sap/m/library/URLHelper' }` )
-          ( n = `xmlns:networkgraph` v = `sap.suite.ui.commons.networkgraph` )
-          ( n = `xmlns:nglayout`     v = `sap.suite.ui.commons.networkgraph.layout` )
-          ( n = `xmlns:ngcustom`     v = `sap.suite.ui.commons.sample.NetworkGraphCustomRendering` )
-          ( n = `xmlns:table`        v = `sap.ui.table` )
-          ( n = `xmlns:template`     v = `http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1` )
-          ( n = `xmlns:f`            v = `sap.f` )
-          ( n = `xmlns:columnmenu`   v = `sap.m.table.columnmenu` )
-          ( n = `xmlns:card`         v = `sap.f.cards` )
-          ( n = `xmlns:form`         v = `sap.ui.layout.form` )
-          ( n = `xmlns:editor`       v = `sap.ui.codeeditor` )
-          ( n = `xmlns:mchart`       v = `sap.suite.ui.microchart` )
-          ( n = `xmlns:webc`         v = `sap.ui.webc.main` )
-          ( n = `xmlns:uxap`         v = `sap.uxap` )
-          ( n = `xmlns:sap`          v = `sap` )
-          ( n = `xmlns:text`         v = `sap.ui.richtexteditor` )
-          ( n = `xmlns:html`         v = `http://www.w3.org/1999/xhtml` )
-          ( n = `xmlns:fb`           v = `sap.ui.comp.filterbar` )
-          ( n = `xmlns:u`            v = `sap.ui.unified` )
-          ( n = `xmlns:gantt`        v = `sap.gantt.simple` )
-          ( n = `xmlns:axistime`     v = `sap.gantt.axistime` )
-          ( n = `xmlns:config`       v = `sap.gantt.config` )
-          ( n = `xmlns:shapes`       v = `sap.gantt.simple.shapes` )
-          ( n = `xmlns:commons`      v = `sap.suite.ui.commons` )
-          ( n = `xmlns:si`           v = `sap.suite.ui.commons.statusindicator` )
-          ( n = `xmlns:vm`           v = `sap.ui.comp.variants` )
-          ( n = `xmlns:viz`          v = `sap.viz.ui5.controls` )
-          ( n = `xmlns:vk`           v = `sap.ui.vk` )
-          ( n = `xmlns:vbm`          v = `sap.ui.vbm` )
-          ( n = `xmlns:ndc`          v = `sap.ndc` )
-          ( n = `xmlns:svm`          v = `sap.ui.comp.smartvariants` )
-          ( n = `xmlns:flvm`         v = `sap.ui.fl.variants` )
-          ( n = `xmlns:p13n`         v = `sap.m.p13n` )
-          ( n = `xmlns:upload`       v = `sap.m.upload` )
-          ( n = `xmlns:fl`           v = `sap.ui.fl` )
-          ( n = `xmlns:plugins`           v = `sap.m.plugins` )
-          ( n = `xmlns:tnt`          v = `sap.tnt` )
-          ( n = `xmlns:mdc`          v = `sap.ui.mdc` ) ).
+          ( n = `z2ui5`             v = `z2ui5` )
+          ( n = `layout`            v = `sap.ui.layout` )
+          ( n = `networkgraph`      v = `sap.suite.ui.commons.networkgraph` )
+          ( n = `nglayout`          v = `sap.suite.ui.commons.networkgraph.layout` )
+          ( n = `ngcustom`          v = `sap.suite.ui.commons.sample.NetworkGraphCustomRendering` )
+          ( n = `table`             v = `sap.ui.table` )
+          ( n = `template`          v = `http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1` )
+          ( n = `customData`        v = `http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1` )
+          ( n = `f`                 v = `sap.f` )
+          ( n = `columnmenu`        v = `sap.m.table.columnmenu` )
+          ( n = `card`              v = `sap.f.cards` )
+          ( n = `form`              v = `sap.ui.layout.form` )
+          ( n = `editor`            v = `sap.ui.codeeditor` )
+          ( n = `mchart`            v = `sap.suite.ui.microchart` )
+          ( n = `webc`              v = `sap.ui.webc.main` )
+          ( n = `uxap`              v = `sap.uxap` )
+          ( n = `sap`               v = `sap` )
+          ( n = `text`              v = `sap.ui.richtexteditor` )
+          ( n = `html`              v = `http://www.w3.org/1999/xhtml` )
+          ( n = `fb`                v = `sap.ui.comp.filterbar` )
+          ( n = `u`                 v = `sap.ui.unified` )
+          ( n = `gantt`             v = `sap.gantt.simple` )
+          ( n = `axistime`          v = `sap.gantt.axistime` )
+          ( n = `config`            v = `sap.gantt.config` )
+          ( n = `shapes`            v = `sap.gantt.simple.shapes` )
+          ( n = `commons`           v = `sap.suite.ui.commons` )
+          ( n = `si`                v = `sap.suite.ui.commons.statusindicator` )
+          ( n = `vm`                v = `sap.ui.comp.variants` )
+          ( n = `viz`               v = `sap.viz.ui5.controls` )
+          ( n = `vk`                v = `sap.ui.vk` )
+          ( n = `vbm`               v = `sap.ui.vbm` )
+          ( n = `ndc`               v = `sap.ndc` )
+          ( n = `svm`               v = `sap.ui.comp.smartvariants` )
+          ( n = `flvm`              v = `sap.ui.fl.variants` )
+          ( n = `p13n`              v = `sap.m.p13n` )
+          ( n = `upload`            v = `sap.m.upload` )
+          ( n = `fl`                v = `sap.ui.fl` )
+          ( n = `plugins`           v = `sap.m.plugins` )
+          ( n = `tnt`               v = `sap.tnt` )
+          ( n = `mdc`               v = `sap.ui.mdc` )
+          ( n = `trm`               v = `sap.ui.table.rowmodes` ) ).
 
-      LOOP AT mt_ns REFERENCE INTO DATA(lr_ns).
-
-        LOOP AT lt_prop REFERENCE INTO DATA(lr_prop).
-
-          DATA(ns) = lr_prop->n+6.
-          IF ns = lr_ns->*.
-            TRY.
-                INSERT lr_prop->* INTO TABLE mt_prop.
-              CATCH cx_root.
-            ENDTRY.
-            DELETE lt_prop.
-            EXIT.
-          ENDIF.
-
-        ENDLOOP.
-
+      LOOP AT mt_ns REFERENCE INTO DATA(lr_ns) WHERE table_line IS NOT INITIAL
+        AND table_line <> `mvc`
+        AND table_line <> `core`.
+        TRY.
+            DATA(ls_prop) = lt_prop[ n = lr_ns->* ].
+            INSERT VALUE #( n = `xmlns:` && ls_prop-n v = ls_prop-v ) INTO TABLE mt_prop.
+          CATCH cx_root.
+            /2u5/test_cl_util=>x_raise( |XML_VIEW_ERROR_NO_NAMESPACE_FOUND_FOR:  { lr_ns->* }| ).
+        ENDTRY.
       ENDLOOP.
 
-      DELETE ADJACENT DUPLICATES FROM mt_prop COMPARING n.
     ENDIF.
 
     DATA(lv_tmp2) = COND #( WHEN mv_ns <> `` THEN |{ mv_ns }:| ).
@@ -9940,6 +9954,7 @@ CLASS /2u5/test_cl_xml_view IMPLEMENTATION.
 
 
   METHOD fix_flex.
+
     result = _generic( ns     = ns
                        name   = `FixFlex`
                        t_prop = VALUE #( ( n = `class`           v = class )
@@ -10028,5 +10043,37 @@ CLASS /2u5/test_cl_xml_view IMPLEMENTATION.
 
   METHOD tiles.
     result = _generic( `tiles` ).
+  ENDMETHOD.
+
+
+  METHOD analytical_column.
+    result = _generic( ns   = ns
+                       name = `AnalyticalColumn` ).
+  ENDMETHOD.
+
+
+  METHOD analytical_table.
+    result = _generic(
+                 name   = `AnalyticalTable`
+                 ns     = ns
+                 t_prop = VALUE #(
+                     ( n = `selectionMode`              v = selectionmode )
+                     ( n = `rowMode`                    v = rowmode )
+                     ( n = `toolbar`                    v = toolbar )
+                     ( n = `columns`                    v = columns ) ) ).
+  ENDMETHOD.
+
+
+  METHOD auto.
+    result = _generic( ns     = ns
+                       name   = `Auto`
+                       t_prop = VALUE #( ( n = `rowContentHeight`           v = rowcontentheight ) ) ).
+  ENDMETHOD.
+
+
+  METHOD rowmode.
+    result = _generic(
+                name   = `rowMode`
+                ns     = ns ).
   ENDMETHOD.
 ENDCLASS.
