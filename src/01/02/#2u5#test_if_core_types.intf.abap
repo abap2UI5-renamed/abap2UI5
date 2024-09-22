@@ -120,6 +120,7 @@ INTERFACE /2u5/test_if_core_types
       BEGIN OF s_follow_up_action,
         custom_js TYPE string,
       END OF s_follow_up_action,
+      handler_attrs TYPE /2u5/test_if_types=>ty_s_http_handler_attributes,
     END OF ty_s_next_frontend.
 
   TYPES:
