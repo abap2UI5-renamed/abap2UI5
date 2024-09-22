@@ -341,4 +341,16 @@ CLASS /2u5/test_cl_core_client IMPLEMENTATION.
   ENDMETHOD.
 
 
+  METHOD /2u5/test_if_client~set_session_stateful.
+
+    IF stateful = abap_true.
+      mo_action->ms_next-s_set-handler_attrs-stateful-active = 1.
+      CAST /2u5/test_if_app( mo_action->mo_app->mo_app )->check_sticky = abap_true.
+    ELSE.
+      mo_action->ms_next-s_set-handler_attrs-stateful-active = 0.
+      CAST /2u5/test_if_app( mo_action->mo_app->mo_app )->check_sticky = abap_false.
+    ENDIF.
+    mo_action->ms_next-s_set-handler_attrs-stateful-switched = abap_true.
+
+  ENDMETHOD.
 ENDCLASS.

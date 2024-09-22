@@ -32,6 +32,10 @@ INTERFACE /2u5/test_if_client
 
   METHODS view_model_update.
 
+  METHODS set_session_stateful
+    IMPORTING
+      stateful TYPE abap_bool DEFAULT abap_true.
+
   METHODS nest_view_display
     IMPORTING
       val            TYPE clike
