@@ -77,7 +77,7 @@ CLASS /2u5/test_cl_cc_scrolling IMPLEMENTATION.
              `              }      ` && |\n| &&
              `              );` && |\n| &&
              |\n| &&
-             `            } , 50 , oControl );` && |\n| &&
+             `            } , 100 , oControl );` && |\n| &&
              `      }` && |\n| &&
              `  });` && |\n| &&
              `}); }`.
