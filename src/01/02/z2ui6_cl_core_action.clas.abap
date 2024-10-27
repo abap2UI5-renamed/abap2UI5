@@ -5,7 +5,7 @@ CLASS z2ui6_cl_core_action DEFINITION
 
   PUBLIC SECTION.
 
-    DATA mo_http_post TYPE REF TO z2ui6_cl_core_http_post.
+    DATA mo_http_post TYPE REF TO z2ui6_cl_core_handler.
     DATA mo_app       TYPE REF TO z2ui6_cl_core_app.
 
     DATA ms_actual TYPE z2ui6_if_core_types=>ty_s_actual.
@@ -33,7 +33,7 @@ CLASS z2ui6_cl_core_action DEFINITION
 
     METHODS constructor
       IMPORTING
-        val TYPE REF TO z2ui6_cl_core_http_post.
+        val TYPE REF TO z2ui6_cl_core_handler.
 
   PROTECTED SECTION.
 
@@ -122,7 +122,7 @@ CLASS z2ui6_cl_core_action IMPLEMENTATION.
 
     "check for new app?
     TRY.
-        DATA(lo_draft) = NEW z2ui6_cl_core_draft_srv( ).
+        DATA(lo_draft) = NEW z2ui6_cl_core_srv_draft( ).
         DATA(ls_draft) = lo_draft->read_info( ms_next-o_app_leave->id_draft ).
       CATCH cx_root.
         result->mo_app->ms_draft-id_prev_app_stack = mo_app->ms_draft-id_prev_app_stack.
@@ -176,6 +176,16 @@ CLASS z2ui6_cl_core_action IMPLEMENTATION.
     result->ms_next-s_set-s_view_nest2-check_update_model = abap_false.
     result->ms_next-s_set-s_popup-check_update_model = abap_false.
     result->ms_next-s_set-s_popover-check_update_model = abap_false.
+
+
+    IF ms_next-s_set-s_follow_up_action IS NOT INITIAL.
+*        .eB(['POPUP_CONFIRM'])
+      SPLIT ms_next-s_set-s_follow_up_action-custom_js AT `.eB(['` INTO DATA(lv_dummy)
+          result->ms_actual-event.
+      SPLIT result->ms_actual-event AT `']` INTO result->ms_actual-event lv_dummy.
+    ENDIF.
+    result->ms_actual-r_data = ms_next-r_data.
+
     CLEAR result->ms_next-s_set-s_msg_box.
     CLEAR result->ms_next-s_set-s_msg_toast.
 
