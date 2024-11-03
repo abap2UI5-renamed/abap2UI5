@@ -327,7 +327,6 @@ CLASS z2ui6_cl_app_app_js IMPLEMENTATION.
              `` && |\n| &&
              `    async renderer(oRm, oControl) {` && |\n| &&
              `` && |\n| &&
-             `      debugger;` && |\n| &&
              `      let oDevice = z2ui5.oView.getModel("device").oData;` && |\n| &&
              `      oControl.setProperty("ui5_version", sap.ui.version);` && |\n| &&
              `      oControl.setProperty("device_phone", oDevice.system.phone);` && |\n| &&
@@ -799,6 +798,7 @@ CLASS z2ui6_cl_app_app_js IMPLEMENTATION.
              `  });` && |\n| &&
              `}` && |\n| &&
              `);` && |\n| &&
+             `` && |\n| &&
               ``.
 
   ENDMETHOD.

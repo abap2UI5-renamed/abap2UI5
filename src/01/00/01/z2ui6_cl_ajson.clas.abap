@@ -50,7 +50,7 @@ CLASS z2ui6_cl_ajson DEFINITION
 
     CLASS-METHODS parse
       IMPORTING
-        !iv_json            TYPE string
+        !iv_json            TYPE any
         !iv_freeze          TYPE abap_bool DEFAULT abap_false
         !ii_custom_mapping  TYPE REF TO z2ui6_if_ajson_mapping OPTIONAL
         !iv_keep_item_order TYPE abap_bool DEFAULT abap_false
