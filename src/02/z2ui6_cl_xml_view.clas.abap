@@ -1034,6 +1034,7 @@ CLASS z2ui6_cl_xml_view DEFINITION
       IMPORTING
         key           TYPE clike OPTIONAL
         value         TYPE clike OPTIONAL
+        writetodom    TYPE clike OPTIONAL
       RETURNING
         VALUE(result) TYPE REF TO z2ui6_cl_xml_view.
 
@@ -1418,6 +1419,7 @@ CLASS z2ui6_cl_xml_view DEFINITION
         wrappingtype  TYPE clike OPTIONAL
         id            TYPE clike OPTIONAL
         class         TYPE clike OPTIONAL
+        visible       TYPE clike OPTIONAL
                   PREFERRED PARAMETER text
       RETURNING
         VALUE(result) TYPE REF TO z2ui6_cl_xml_view.
@@ -5757,7 +5759,8 @@ CLASS z2ui6_cl_xml_view IMPLEMENTATION.
     _generic( name   = `CustomData`
               ns     = `core`
               t_prop = VALUE #( ( n = `value` v = value )
-                                ( n = `key` v = key ) ) ).
+                                ( n = `key` v = key )
+                                ( n = `writeToDom` v = z2ui6_cl_util=>boolean_abap_2_json( writetodom ) ) ) ).
 
   ENDMETHOD.
 
@@ -7038,7 +7041,8 @@ CLASS z2ui6_cl_xml_view IMPLEMENTATION.
                                 ( n = `design`   v = design )
                                 ( n = `id`   v = id )
                                 ( n = `class`   v = class )
-                                ( n = `labelFor` v = labelfor ) ) ).
+                                ( n = `labelFor` v = labelfor )
+                                ( n = `visible`   v = z2ui6_cl_util=>boolean_abap_2_json( visible ) ) ) ).
   ENDMETHOD.
 
   METHOD lanes.
