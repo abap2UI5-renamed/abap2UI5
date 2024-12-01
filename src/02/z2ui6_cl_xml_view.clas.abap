@@ -1711,6 +1711,12 @@ CLASS z2ui6_cl_xml_view DEFINITION
       RETURNING
         VALUE(result)  TYPE REF TO z2ui6_cl_xml_view.
 
+    METHODS grid_box_layout
+      IMPORTING boxesperrowconfig TYPE clike OPTIONAL
+                boxMinWidth       TYPE clike OPTIONAL
+                boxWidth          TYPE clike OPTIONAL
+      RETURNING VALUE(result)     TYPE REF TO z2ui6_cl_xml_view.
+
     METHODS grid_data
       IMPORTING
         span          TYPE clike OPTIONAL
@@ -1720,6 +1726,67 @@ CLASS z2ui6_cl_xml_view DEFINITION
                   PREFERRED PARAMETER span
       RETURNING
         VALUE(result) TYPE REF TO z2ui6_cl_xml_view.
+
+    METHODS grid_drop_info
+      IMPORTING targetAggregation TYPE clike OPTIONAL
+                dropPosition      TYPE clike OPTIONAL
+                dropLayout        TYPE clike OPTIONAL
+                drop              TYPE clike OPTIONAL
+                dragEnter         TYPE clike OPTIONAL
+                dragOver          TYPE clike OPTIONAL
+      RETURNING VALUE(result)     TYPE REF TO z2ui6_cl_xml_view.
+
+    METHODS grid_list
+      IMPORTING !id                    TYPE clike     OPTIONAL
+                busy                   TYPE abap_bool OPTIONAL
+                busyIndicatorDelay     TYPE clike     OPTIONAL
+                busyIndicatorSize      TYPE clike     OPTIONAL
+                enableBusyIndicator    TYPE abap_bool OPTIONAL
+                fieldGroupIds          TYPE clike     OPTIONAL
+                footerText             TYPE clike     OPTIONAL
+                growing                TYPE abap_bool OPTIONAL
+                growingDirection       TYPE clike     OPTIONAL
+                growingScrollToLoad    TYPE abap_bool OPTIONAL
+                growingThreshold       TYPE clike     OPTIONAL
+                growingTriggerText     TYPE clike     OPTIONAL
+                headerLevel            TYPE clike     OPTIONAL
+                headerText             TYPE clike     OPTIONAL
+                includeItemInSelection TYPE abap_bool OPTIONAL
+                inset                  TYPE abap_bool OPTIONAL
+                keyboardMode           TYPE clike     OPTIONAL
+                !mode                  TYPE clike     OPTIONAL
+                modeAnimationOn        TYPE abap_bool OPTIONAL
+                multiSelectMode        TYPE clike     OPTIONAL
+                noDataText             TYPE clike     OPTIONAL
+                rememberSelections     TYPE abap_bool OPTIONAL
+                showNoData             TYPE abap_bool OPTIONAL
+                showSeparators         TYPE clike     OPTIONAL
+                showUnread             TYPE abap_bool OPTIONAL
+                sticky                 TYPE clike     OPTIONAL
+                swipeDirection         TYPE clike     OPTIONAL
+                !visible               TYPE abap_bool DEFAULT abap_true
+                !width                 TYPE clike     OPTIONAL
+                items                  TYPE clike     OPTIONAL
+      RETURNING VALUE(result)          TYPE REF TO z2ui6_cl_xml_view.
+
+    METHODS grid_list_item
+      IMPORTING busy               TYPE clike OPTIONAL
+                busyIndicatorDelay TYPE clike OPTIONAL
+                busyIndicatorSize  TYPE clike OPTIONAL
+                counter            TYPE clike OPTIONAL
+                fieldGroupIds      TYPE clike OPTIONAL
+                highlight          TYPE clike OPTIONAL
+                highlightText      TYPE clike OPTIONAL
+                navigated          TYPE clike OPTIONAL
+                selected           TYPE clike OPTIONAL
+                !type              TYPE clike OPTIONAL
+                unread             TYPE clike OPTIONAL
+                !visible           TYPE clike DEFAULT `true`
+                detailPress        TYPE clike OPTIONAL
+                detailTap          TYPE clike OPTIONAL
+                press              TYPE clike OPTIONAL
+                tap                TYPE clike OPTIONAL
+      RETURNING VALUE(result)      TYPE REF TO z2ui6_cl_xml_view.
 
     METHODS text_area
       IMPORTING
@@ -1819,6 +1886,16 @@ CLASS z2ui6_cl_xml_view DEFINITION
         change        TYPE clike OPTIONAL
         type          TYPE clike OPTIONAL
       RETURNING
+        VALUE(result) TYPE REF TO z2ui6_cl_xml_view.
+
+    METHODS harveyballmicrochartitem
+       IMPORTING
+        id            TYPE clike OPTIONAL
+        color         TYPE clike OPTIONAL
+        fraction      TYPE clike OPTIONAL
+        fractionScale TYPE clike OPTIONAL
+       class          TYPE clike OPTIONAL
+       RETURNING
         VALUE(result) TYPE REF TO z2ui6_cl_xml_view.
 
     METHODS step_input
@@ -3478,6 +3555,14 @@ CLASS z2ui6_cl_xml_view DEFINITION
       RETURNING
         VALUE(result) TYPE REF TO z2ui6_cl_xml_view.
 
+    METHODS comparison_micro_chart_Data
+      IMPORTING !color        TYPE clike OPTIONAL
+                press         TYPE clike OPTIONAL
+                displayvalue  TYPE clike OPTIONAL
+                !title        TYPE clike OPTIONAL
+                !value        TYPE clike OPTIONAL
+      RETURNING VALUE(result) TYPE REF TO z2ui6_cl_xml_view.
+
     METHODS delta_micro_chart
       IMPORTING
         color             TYPE clike OPTIONAL
@@ -3963,6 +4048,7 @@ CLASS z2ui6_cl_xml_view DEFINITION
       IMPORTING
         id               TYPE clike OPTIONAL
         autoadjustheight TYPE clike OPTIONAL
+        showHome         TYPE clike OPTIONAL
       RETURNING
         VALUE(result)    TYPE REF TO z2ui6_cl_xml_view.
 
@@ -3977,16 +4063,20 @@ CLASS z2ui6_cl_xml_view DEFINITION
         image         TYPE clike OPTIONAL
         icon          TYPE clike OPTIONAL
         click         TYPE clike OPTIONAL
+        text          TYPE clike OPTIONAL
       RETURNING
         VALUE(result) TYPE REF TO z2ui6_cl_xml_view.
 
     METHODS analytic_map
-      IMPORTING
-        id              TYPE clike OPTIONAL
-        initialposition TYPE clike OPTIONAL
-        initialzoom     TYPE clike OPTIONAL
+      IMPORTING !id             TYPE clike OPTIONAL
+                initialposition TYPE clike OPTIONAL
+                height          TYPE clike OPTIONAL
+                lassoSelection  TYPE clike OPTIONAL
+                visible         TYPE clike OPTIONAL
+                width           TYPE clike OPTIONAL
+                initialzoom     TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)   TYPE REF TO z2ui6_cl_xml_view.
+        VALUE(result)           TYPE REF TO z2ui6_cl_xml_view.
 
     METHODS spots
       IMPORTING
@@ -4209,6 +4299,8 @@ CLASS z2ui6_cl_xml_view DEFINITION
         VALUE(result)           TYPE REF TO z2ui6_cl_xml_view.
 
     METHODS custom_layout
+      IMPORTING
+        ns            TYPE clike OPTIONAL
       RETURNING
         VALUE(result) TYPE REF TO z2ui6_cl_xml_view.
 
@@ -4312,6 +4404,13 @@ CLASS z2ui6_cl_xml_view DEFINITION
         visible        TYPE clike OPTIONAL
       RETURNING
         VALUE(result)  TYPE REF TO z2ui6_cl_xml_view.
+
+    METHODS drag_info
+      IMPORTING sourceAggregation TYPE clike OPTIONAL
+      RETURNING VALUE(result)     TYPE REF TO z2ui6_cl_xml_view.
+
+    METHODS drag_drop_config
+      RETURNING VALUE(result) TYPE REF TO z2ui6_cl_xml_view.
 
     METHODS html_map
       IMPORTING
@@ -5070,6 +5169,10 @@ CLASS z2ui6_cl_xml_view IMPLEMENTATION.
                        ns     = `vbm`
                        t_prop = VALUE #( ( n = `id`  v = id )
                                          ( n = `initialPosition`  v = initialposition )
+                                         ( n = `lassoSelection`  v = lassoSelection )
+                                         ( n = `height`  v = height )
+                                         ( n = `visible`  v = visible )
+                                         ( n = `width`  v = width )
                                          ( n = `initialZoom`  v = initialzoom ) ) ).
 
   ENDMETHOD.
@@ -5684,20 +5787,29 @@ CLASS z2ui6_cl_xml_view IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD comparison_micro_chart.
-    result = me.
-    _generic( name   = `ComparisonMicroChart`
-              ns     = `mchart`
-              t_prop = VALUE #( ( n = `colorPalette`  v = colorpalette )
-                                ( n = `press`       v = press )
-                                ( n = `size`        v = size )
-                                ( n = `height`      v = height )
-                                ( n = `maxValue`      v = maxvalue )
-                                ( n = `minValue`      v = minvalue )
-                                ( n = `scale`      v = scale )
-                                ( n = `width`      v = width )
-                                ( n = `hideOnNoData`    v = z2ui6_cl_util=>boolean_abap_2_json( hideonnodata ) )
-                                ( n = `shrinkable`    v = z2ui6_cl_util=>boolean_abap_2_json( shrinkable ) )
-                                ( n = `view`  v = view ) ) ).
+    result = _generic( name   = `ComparisonMicroChart`
+                      ns     = `mchart`
+                      t_prop = VALUE #( ( n = `colorPalette`  v = colorpalette )
+                                        ( n = `press`       v = press )
+                                        ( n = `size`        v = size )
+                                        ( n = `height`      v = height )
+                                        ( n = `maxValue`      v = maxvalue )
+                                        ( n = `minValue`      v = minvalue )
+                                        ( n = `scale`      v = scale )
+                                        ( n = `width`      v = width )
+                                        ( n = `hideOnNoData`    v = z2ui6_cl_util=>boolean_abap_2_json( hideonnodata ) )
+                                        ( n = `shrinkable`    v = z2ui6_cl_util=>boolean_abap_2_json( shrinkable ) )
+                                        ( n = `view`  v = view ) ) ).
+  ENDMETHOD.
+
+  METHOD comparison_micro_chart_data.
+    result = _generic( name   = `ComparisonMicroChartData`
+                       ns     = `mchart`
+                       t_prop = VALUE #( ( n = `color`  v = color )
+                                         ( n = `press`       v = press )
+                                         ( n = `displayValue`        v = displayValue )
+                                         ( n = `title`      v = title )
+                                         ( n = `value`      v = value )  ) ).
   ENDMETHOD.
 
   METHOD constructor.
@@ -5790,7 +5902,8 @@ CLASS z2ui6_cl_xml_view IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD custom_layout.
-    result = _generic( `customLayout` ).
+    result = _generic( name = `customLayout`
+                       ns   = ns  ).
   ENDMETHOD.
 
   METHOD custom_list_item.
@@ -5909,6 +6022,18 @@ CLASS z2ui6_cl_xml_view IMPLEMENTATION.
                                          ( n = `minDisplayTime`  v = mindisplaytime )
                                          ( n = `state`  v = state )
                                          ( n = `visible` v = z2ui6_cl_util=>boolean_abap_2_json( visible ) ) ) ).
+  ENDMETHOD.
+
+  METHOD drag_info.
+    result = me.
+    _generic( name   = `DragInfo`
+              ns     = `dnd`
+              t_prop = VALUE #( ( n = `sourceAggregation`  v = sourceAggregation ) ) ).
+  ENDMETHOD.
+
+  METHOD drag_drop_config.
+    result = _generic( name = `dragDropConfig`
+                       ns   = `f` ).
   ENDMETHOD.
 
   METHOD dynamic_page.
@@ -6518,6 +6643,15 @@ CLASS z2ui6_cl_xml_view IMPLEMENTATION.
                                    ( n = `width`          v = width ) ) ).
   ENDMETHOD.
 
+  METHOD grid_box_layout.
+    result = me.
+    _generic( name   = `GridBoxLayout`
+              ns     = `grid`
+              t_prop = VALUE #( ( n = `boxesPerRowConfig`   v = boxesPerRowConfig )
+                                ( n = `boxMinWidth`   v = boxMinWidth )
+                                ( n = `boxWidth`   v = boxWidth ) ) ).
+  ENDMETHOD.
+
   METHOD grid_data.
     result = me.
     _generic( name   = `GridData`
@@ -6526,6 +6660,76 @@ CLASS z2ui6_cl_xml_view IMPLEMENTATION.
                                 ( n = `linebreak` v = z2ui6_cl_util=>boolean_abap_2_json( linebreak ) )
                                 ( n = `indentL`   v = indentl )
                                 ( n = `indentM`   v = indentm ) ) ).
+  ENDMETHOD.
+
+  METHOD grid_drop_info.
+    result = me.
+    _generic( name   = `GridDropInfo`
+              ns     = `dnd-grid`
+              t_prop = VALUE #( ( n = `targetAggregation`      v = targetAggregation )
+                                ( n = `dropPosition` v = dropPosition )
+                                ( n = `dropLayout` v = dropLayout )
+                                ( n = `drop`   v = drop )
+                                ( n = `dragEnter`   v = dragEnter )
+                                ( n = `dragOver`   v = dragOver ) ) ).
+  ENDMETHOD.
+
+  METHOD grid_list.
+    result = _generic(
+                 name   = `GridList`
+                 ns     = `f`
+                 t_prop = VALUE #(
+                     ( n = `id`      v = id )
+                     ( n = `busy` v = z2ui6_cl_util=>boolean_abap_2_json( busy ) )
+                     ( n = `busyIndicatorDelay` v = busyIndicatorDelay )
+                     ( n = `busyIndicatorSize` v = busyIndicatorSize )
+                     ( n = `enableBusyIndicator` v = z2ui6_cl_util=>boolean_abap_2_json( enableBusyIndicator ) )
+                     ( n = `fieldGroupIds` v = fieldGroupIds )
+                     ( n = `footerText` v = footerText )
+                     ( n = `growing` v = z2ui6_cl_util=>boolean_abap_2_json( growing ) )
+                     ( n = `growingDirection` v = growingDirection )
+                     ( n = `growingScrollToLoad` v = z2ui6_cl_util=>boolean_abap_2_json( growingScrollToLoad ) )
+                     ( n = `growingThreshold` v = growingThreshold )
+                     ( n = `growingTriggerText` v = growingTriggerText )
+                     ( n = `headerLevel` v = headerLevel )
+                     ( n = `headerText` v = headerText )
+                     ( n = `includeItemInSelection` v = z2ui6_cl_util=>boolean_abap_2_json( includeItemInSelection ) )
+                     ( n = `inset` v = z2ui6_cl_util=>boolean_abap_2_json( inset ) )
+                     ( n = `keyboardMode` v = keyboardMode )
+                     ( n = `mode` v = mode )
+                     ( n = `modeAnimationOn` v = modeAnimationOn )
+                     ( n = `multiSelectMode` v = multiSelectMode )
+                     ( n = `noDataText` v = noDataText )
+                     ( n = `rememberSelections` v = z2ui6_cl_util=>boolean_abap_2_json( rememberSelections ) )
+                     ( n = `showNoData` v = z2ui6_cl_util=>boolean_abap_2_json( showNoData ) )
+                     ( n = `showSeparators` v = showSeparators )
+                     ( n = `showUnread` v = z2ui6_cl_util=>boolean_abap_2_json( showUnread ) )
+                     ( n = `sticky` v = sticky )
+                     ( n = `swipeDirection` v = swipeDirection )
+                     ( n = `visible` v = z2ui6_cl_util=>boolean_abap_2_json( visible ) )
+                     ( n = `width` v = width )
+                     ( n = `items`   v = items ) ) ).
+  ENDMETHOD.
+
+  METHOD grid_list_item.
+    result = _generic( name   = `GridListItem`
+                       ns     = `f`
+                       t_prop = VALUE #( ( n = `busy`      v = busy )
+                                         ( n = `busyIndicatorDelay` v = busyIndicatorDelay )
+                                         ( n = `busyIndicatorSize` v = busyIndicatorSize )
+                                         ( n = `counter` v = counter )
+                                         ( n = `fieldGroupIds` v = fieldGroupIds )
+                                         ( n = `highlight` v = highlight )
+                                         ( n = `highlightText` v = highlightText )
+                                         ( n = `navigated` v = navigated )
+                                         ( n = `selected` v = selected )
+                                         ( n = `type` v = type )
+                                         ( n = `unread` v = unread )
+                                         ( n = `visible`   v = visible )
+                                         ( n = `detailPress` v = detailPress )
+                                         ( n = `detailTap` v = detailTap )
+                                         ( n = `press` v = press )
+                                         ( n = `tap` v = tap ) ) ).
   ENDMETHOD.
 
   METHOD group.
@@ -6558,8 +6762,8 @@ CLASS z2ui6_cl_xml_view IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD harvey_ball_micro_chart.
-    result = me.
-    _generic( name   = `HarveyBallMicroChart`
+
+    result = _generic( name   = `HarveyBallMicroChart`
               ns     = `mchart`
               t_prop = VALUE #( ( n = `colorPalette`  v = colorpalette )
                                 ( n = `press`       v = press )
@@ -7320,7 +7524,8 @@ CLASS z2ui6_cl_xml_view IMPLEMENTATION.
                        ns     = `vk`
                        t_prop = VALUE #(
                            ( n = `id`  v = id )
-                           ( n = `autoAdjustHeight`  v = z2ui6_cl_util=>boolean_abap_2_json( autoadjustheight ) ) ) ).
+                           ( n = `autoAdjustHeight`  v = z2ui6_cl_util=>boolean_abap_2_json( autoadjustheight ) ) 
+                           ( n = `showHome`  v = z2ui6_cl_util=>boolean_abap_2_json( showHome )  )  ) ).
 
   ENDMETHOD.
 
@@ -8959,6 +9164,7 @@ CLASS z2ui6_cl_xml_view IMPLEMENTATION.
                                 ( n = `tooltip`  v = tooltip )
                                 ( n = `image`  v = image )
                                 ( n = `icon`  v = icon )
+                                ( n = `text`  v = text )
                                 ( n = `click`  v = click ) ) ).
 
   ENDMETHOD.
@@ -10132,6 +10338,9 @@ CLASS z2ui6_cl_xml_view IMPLEMENTATION.
           ( n = `f`                 v = `sap.f` )
           ( n = `columnmenu`        v = `sap.m.table.columnmenu` )
           ( n = `card`              v = `sap.f.cards` )
+          ( n = `dnd`               v = `sap.ui.core.dnd` )
+          ( n = `dnd-grid`          v = `sap.f.dnd` )
+          ( n = `grid`              v = `sap.ui.layout.cssgrid` )
           ( n = `form`              v = `sap.ui.layout.form` )
           ( n = `editor`            v = `sap.ui.codeeditor` )
           ( n = `mchart`            v = `sap.suite.ui.microchart` )
@@ -10471,4 +10680,13 @@ CLASS z2ui6_cl_xml_view IMPLEMENTATION.
                        t_prop = VALUE #( ( n = `colorSelect`           v = colorselect ) ) ).
   ENDMETHOD.
 
+  METHOD HarveyBallMicroChartItem.
+    result = _generic( name   = `HarveyBallMicroChartItem`
+                       ns     = `mchart`
+                       t_prop = VALUE #( ( n = `id`  v = id )
+                                         ( n = `class`  v = class )
+                                         ( n = `fraction`  v = fraction )
+                                         ( n = `color`  v = color )
+                                         ( n = `fractionScale` v = fractionScale ) ) ).
+  ENDMETHOD.
 ENDCLASS.
