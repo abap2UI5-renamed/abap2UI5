@@ -35,7 +35,7 @@ CLASS z2ui6_cl_app_manifest_json IMPLEMENTATION.
              `      "toolsId": "3a966e20-9635-4c28-8861-d1b66f79f1de"` &&
              `    },` &&
              `    "dataSources": {` &&
-             `      "mainService": {` &&
+             `      "http": {` &&
              `        "uri": "/sap/bc/z2ui5",` &&
              `        "type": "OData",` &&
              `        "settings": {` &&
@@ -94,8 +94,8 @@ CLASS z2ui6_cl_app_manifest_json IMPLEMENTATION.
              `      }` &&
              `    },` &&
              `    "models": {` &&
-             `      "": {` &&
-             `        "dataSource": "mainService",` &&
+             `      "http": {` &&
+             `        "dataSource": "http",` &&
              `        "preload": true,` &&
              `        "settings": {}` &&
              `      }` &&
