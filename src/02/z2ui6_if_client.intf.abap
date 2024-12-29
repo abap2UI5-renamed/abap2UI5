@@ -19,6 +19,7 @@ INTERFACE z2ui6_if_client
       set_odata_model           TYPE string VALUE `SET_ODATA_MODEL`,
       urlhelper                 TYPE string VALUE `URLHELPER`,
       history_back              TYPE string VALUE `HISTORY_BACK`,
+      CLIPBOARD_APP_STATE       TYPE string VALUE `CLIPBOARD_APP_STATE`,
     END OF cs_event.
 
   CONSTANTS:
@@ -50,7 +51,7 @@ INTERFACE z2ui6_if_client
 
   METHODS set_push_state
     IMPORTING
-      val TYPE abap_bool DEFAULT abap_true.
+      val TYPE string optional.
 
   METHODS set_nav_back
     IMPORTING

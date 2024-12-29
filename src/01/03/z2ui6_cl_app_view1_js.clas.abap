@@ -20,10 +20,10 @@ CLASS z2ui6_cl_app_view1_js IMPLEMENTATION.
 
     result =              `sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/mvc/XMLView", "sap/ui/model/json/JSONModel",` && |\n|  &&
              `    "sap/ui/core/BusyIndicator", "sap/m/MessageBox", "sap/m/MessageToast", "sap/ui/core/Fragment", "sap/m/BusyDialog",` && |\n|  &&
-             `    "sap/ui/VersionInfo", "z2ui5/cc/Server", "sap/ui/model/odata/v2/ODataModel", "sap/m/library"` && |\n|  &&
+             `    "sap/ui/VersionInfo", "z2ui5/cc/Server", "sap/ui/model/odata/v2/ODataModel", "sap/m/library",   "sap/ui/core/routing/HashChanger"` && |\n|  &&
              `],` && |\n|  &&
              `    function (Controller, XMLView, JSONModel, BusyIndicator, MessageBox, MessageToast, Fragment, mBusyDialog, VersionInfo,` && |\n|  &&
-             `        Server, ODataModel, mobileLibrary) {` && |\n|  &&
+             `        Server, ODataModel, mobileLibrary, HashChanger) {` && |\n|  &&
              `        "use strict";` && |\n|  &&
              `        return Controller.extend("z2ui5.controller.View1", {` && |\n|  &&
              `` && |\n|  &&
@@ -77,20 +77,31 @@ CLASS z2ui6_cl_app_view1_js IMPLEMENTATION.
              `                    }` && |\n|  &&
              `` && |\n|  &&
              `                    let oState = JSON.parse(JSON.stringify({ view: z2ui5.oView.mProperties.viewContent, model: z2ui5.oView.getModel().getData(), response: z2ui5.oResponse }));` && |\n|  &&
-             `                    if (SET_PUSH_STATE) {` && |\n|  &&
-             `                        history.pushState(oState, "", window.location.href );` && |\n|  &&
-             `                    }else{` && |\n|  &&
+             `                   if (SET_PUSH_STATE) {` && |\n|  &&
+             `                     // sap.ui.core.routing.HashChanger.getInstance().setHash("423143124");` && |\n|  &&
+             `                     // sap.ui.core.routing.HashChanger.getInstance().replaceHash("423143124");` && |\n|  &&
+             `                      //history.go(-1);` && |\n|  &&
+             `                        let urlObj = new URL(window.location.href);` && |\n|  &&
+             `                        let hash = HashChanger.getInstance().getHash();` && |\n|  &&
+             `                        if (!hash){` && |\n|  &&
+             `                        hash = '#';` && |\n|  &&
+             `                        }` && |\n|  &&
+             `                        history.pushState(oState, "", urlObj.pathname + urlObj.search + hash + SET_PUSH_STATE);` && |\n|  &&
+             `                     }else{` && |\n|  &&
+             `                     //  debugger;` && |\n|  &&
              `                        history.replaceState(oState, "", window.location.href );` && |\n|  &&
              `                    }` && |\n|  &&
              `` && |\n|  &&
              `                    if (SET_APP_STATE_ACTIVE) {` && |\n|  &&
-             `                        let urlObj = new URL(window.location.href);` && |\n|  &&
-             `                        urlObj.searchParams.set("z2ui5-xapp-state", z2ui5.oResponse.ID);` && |\n|  &&
-             `                        history.replaceState(oState, null, urlObj.pathname + urlObj.search + urlObj.hash);` && |\n|  &&
+             `                      HashChanger.getInstance().replaceHash("z2ui5-xapp-state=" + z2ui5.oResponse.ID );` && |\n|  &&
+             `                      //  let urlObj = new URL(window.location.href);` && |\n|  &&
+             `                      //  urlObj.searchParams.set("z2ui5-xapp-state", z2ui5.oResponse.ID);` && |\n|  &&
+             `                      //  history.replaceState(oState, null, urlObj.pathname + urlObj.search + urlObj.hash);` && |\n|  &&
              `                    } else {` && |\n|  &&
-             `                        let urlObj = new URL(window.location.href);` && |\n|  &&
-             `                        urlObj.searchParams.delete("z2ui5-xapp-state");` && |\n|  &&
-             `                        history.replaceState(oState, null, urlObj.pathname + urlObj.search + urlObj.hash);` && |\n|  &&
+             `                       HashChanger.getInstance().replaceHash("");` && |\n|  &&
+             `                      //  let urlObj = new URL(window.location.href);` && |\n|  &&
+             `                      //  urlObj.searchParams.delete("z2ui5-xapp-state");` && |\n|  &&
+             `                      //  history.replaceState(oState, null, urlObj.pathname + urlObj.search + urlObj.hash);` && |\n|  &&
              `                    }` && |\n|  &&
              `` && |\n|  &&
              `` && |\n|  &&
@@ -288,6 +299,33 @@ CLASS z2ui6_cl_app_view1_js IMPLEMENTATION.
              `                    case 'HISTORY_BACK':` && |\n|  &&
              `                        history.back();` && |\n|  &&
              `                        break;` && |\n|  &&
+             `                    case 'CLIPBOARD_APP_STATE':` && |\n|  &&
+             `                            function copyToClipboard(textToCopy) {` && |\n|  &&
+             `                                if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {` && |\n|  &&
+             `                                    navigator.clipboard.writeText(textToCopy)` && |\n|  &&
+             `                                        .then(() => {` && |\n|  &&
+             `` && |\n|  &&
+             `                                        })` && |\n|  &&
+             `                                        .catch(err => {` && |\n|  &&
+             `` && |\n|  &&
+             `                                        });` && |\n|  &&
+             `                                } else {` && |\n|  &&
+             `                                    const tempTextArea = document.createElement("textarea");` && |\n|  &&
+             `                                    tempTextArea.value = textToCopy;` && |\n|  &&
+             `                                    document.body.appendChild(tempTextArea);` && |\n|  &&
+             `` && |\n|  &&
+             `                                    tempTextArea.select();` && |\n|  &&
+             `                                    try {` && |\n|  &&
+             `                                        document.execCommand("copy");` && |\n|  &&
+             `` && |\n|  &&
+             `                                    } catch (err) {` && |\n|  &&
+             `` && |\n|  &&
+             `                                    }` && |\n|  &&
+             `                                    document.body.removeChild(tempTextArea);` && |\n|  &&
+             `                                }` && |\n|  &&
+             `                            }` && |\n|  &&
+             `                                                    copyToClipboard(window.location.href + '#/z2ui5-xapp-state=' + z2ui5.oResponse.ID );` && |\n|  &&
+             `                                                    break;` && |\n|  &&
              `                    case 'SET_ODATA_MODEL':` && |\n|  &&
              `                        var oModel = new ODataModel({ serviceUrl: args[1], annotationURI: (args.length > 3 ? args[3] : '') });` && |\n|  &&
              `                        z2ui5.oView.setModel(oModel, args[2] ? args[2] : undefined);` && |\n|  &&
@@ -480,6 +518,8 @@ CLASS z2ui6_cl_app_view1_js IMPLEMENTATION.
              `                if (params == undefined) {` && |\n|  &&
              `                    return;` && |\n|  &&
              `                }` && |\n|  &&
+             |\n|.
+    result = result &&
              `                if (params[msgType]?.TEXT !== undefined) {` && |\n|  &&
              `                    if (msgType === 'S_MSG_TOAST') {` && |\n|  &&
              `                        MessageToast.show(params[msgType].TEXT, {` && |\n|  &&
@@ -518,8 +558,6 @@ CLASS z2ui6_cl_app_view1_js IMPLEMENTATION.
              `                    }` && |\n|  &&
              `                }` && |\n|  &&
              `            },` && |\n|  &&
-             |\n|.
-    result = result &&
              `            async displayView(xml, viewModel) {` && |\n|  &&
              `                let oview_model = new JSONModel(viewModel);` && |\n|  &&
              `                var oModel = oview_model;` && |\n|  &&
@@ -551,7 +589,6 @@ CLASS z2ui6_cl_app_view1_js IMPLEMENTATION.
              `            },` && |\n|  &&
              `        })` && |\n|  &&
              `    });` && |\n|  &&
-             `` && |\n|  &&
               ``.
 
   ENDMETHOD.
