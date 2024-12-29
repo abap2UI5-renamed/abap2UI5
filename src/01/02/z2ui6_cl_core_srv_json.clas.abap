@@ -36,7 +36,10 @@ CLASS z2ui6_cl_core_srv_json DEFINITION
 ENDCLASS.
 
 
+
 CLASS z2ui6_cl_core_srv_json IMPLEMENTATION.
+
+
   METHOD model_front_to_back.
 
     IF line_exists( t_attri->*[ view = view ] ).
@@ -76,6 +79,7 @@ CLASS z2ui6_cl_core_srv_json IMPLEMENTATION.
     ENDLOOP.
 
   ENDMETHOD.
+
 
   METHOD model_back_to_front.
     TRY.
@@ -129,6 +133,7 @@ CLASS z2ui6_cl_core_srv_json IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
+
   METHOD request_json_to_abap.
     TRY.
 
@@ -163,10 +168,20 @@ CLASS z2ui6_cl_core_srv_json IMPLEMENTATION.
           CATCH cx_root.
         ENDTRY.
 
-        result-s_control-app_start_draft = z2ui6_cl_util=>c_trim_upper(
-                                              z2ui6_cl_util=>url_param_get( val = `z2ui5-xapp-state`
-                                                                            url = result-s_front-search ) ).
-
+        try.
+    "   result-s_control-app_start_draft = z2ui5_cl_util=>c_trim_upper(
+    "                                         z2ui5_cl_util=>url_param_get( val = `z2ui5-xapp-state`
+    "                                                                       url = result-s_front-search ) ).
+            data(lv_hash) = result-s_front-hash.
+            split lv_hash at '&/' into data(lv_dummy) lv_hash.
+            if lv_hash is initial.
+              lv_hash = result-s_front-hash+2.
+            endif.
+            result-s_control-app_start_draft = z2ui6_cl_util=>c_trim_upper(
+                                           z2ui6_cl_util=>url_param_get( val = `z2ui5-xapp-state`
+                                                                         url = lv_hash ) ).
+          catch cx_root.
+        endtry.
         IF result-s_control-app_start IS NOT INITIAL.
           IF result-s_control-app_start(1) = `-`.
             REPLACE FIRST OCCURRENCE OF `-` IN result-s_control-app_start WITH `/`.
@@ -186,6 +201,7 @@ CLASS z2ui6_cl_core_srv_json IMPLEMENTATION.
             val = x.
     ENDTRY.
   ENDMETHOD.
+
 
   METHOD response_abap_to_json.
     TRY.
@@ -207,6 +223,7 @@ CLASS z2ui6_cl_core_srv_json IMPLEMENTATION.
         ASSERT x IS NOT BOUND.
     ENDTRY.
   ENDMETHOD.
+
 
   METHOD z2ui6_if_ajson_filter~keep_node.
 
