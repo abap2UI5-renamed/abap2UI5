@@ -21,7 +21,9 @@ jobs:
         npm run init
         npm run main
         git status
-    - name: Open PR
-      uses: peter-evans/create-pull-request@v4
+    - name: Enable Pull Request Automerge
+      uses: peter-evans/enable-pull-request-automerge@v3
       with:
         title: Automatic Update
+        pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+        merge-method: squash        
