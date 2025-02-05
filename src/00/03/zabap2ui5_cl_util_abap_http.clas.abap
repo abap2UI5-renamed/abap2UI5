@@ -1,4 +1,4 @@
-CLASS zabap2ui5_cl_abap_api_http DEFINITION PUBLIC.
+CLASS zabap2ui5_cl_util_abap_http DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -6,14 +6,14 @@ CLASS zabap2ui5_cl_abap_api_http DEFINITION PUBLIC.
       IMPORTING
         server        TYPE REF TO object
       RETURNING
-        VALUE(result) TYPE REF TO zabap2ui5_cl_abap_api_http.
+        VALUE(result) TYPE REF TO zabap2ui5_cl_util_abap_http.
 
     CLASS-METHODS factory_cloud
       IMPORTING
         req           TYPE REF TO object
         res           TYPE REF TO object
       RETURNING
-        VALUE(result) TYPE REF TO zabap2ui5_cl_abap_api_http.
+        VALUE(result) TYPE REF TO zabap2ui5_cl_util_abap_http.
 
     METHODS get_header_field
       IMPORTING
@@ -67,7 +67,7 @@ CLASS zabap2ui5_cl_abap_api_http DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS zabap2ui5_cl_abap_api_http IMPLEMENTATION.
+CLASS zabap2ui5_cl_util_abap_http IMPLEMENTATION.
   METHOD delete_response_cookie.
 
     DATA(lv_val) = CONV string( val ).
