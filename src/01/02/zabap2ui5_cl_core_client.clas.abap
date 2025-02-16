@@ -172,7 +172,9 @@ CLASS zabap2ui5_cl_core_client IMPLEMENTATION.
   METHOD zabap2ui5_if_client~nav_app_call.
 
     IF app IS NOT BOUND.
-      zabap2ui5_cl_util=>x_raise( `NAV_APP_LEAVE_TO_INITIAL_APP_ERROR` ).
+      RAISE EXCEPTION TYPE zabap2ui5_cx_util_error
+        EXPORTING
+          val = `NAV_APP_LEAVE_TO_INITIAL_APP_ERROR`.
     ENDIF.
 
     mo_action->ms_next-o_app_call = app.
@@ -190,7 +192,9 @@ CLASS zabap2ui5_cl_core_client IMPLEMENTATION.
     ENDIF.
 
     IF app IS NOT BOUND.
-      zabap2ui5_cl_util=>x_raise( `NAV_APP_LEAVE_TO_INITIAL_APP_ERROR` ).
+      RAISE EXCEPTION TYPE zabap2ui5_cx_util_error
+        EXPORTING
+          val = `NAV_APP_LEAVE_TO_INITIAL_APP_ERROR`.
     ENDIF.
 
     mo_action->ms_next-o_app_leave = app.
