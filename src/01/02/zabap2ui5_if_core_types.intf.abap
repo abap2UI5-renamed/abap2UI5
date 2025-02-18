@@ -210,6 +210,4 @@ INTERFACE zabap2ui5_if_core_types
       r_data             TYPE REF TO data,
     END OF ty_s_actual.
 
-  TYPES ty_s_db TYPE zabap2ui5_t_01.
-
 ENDINTERFACE.
