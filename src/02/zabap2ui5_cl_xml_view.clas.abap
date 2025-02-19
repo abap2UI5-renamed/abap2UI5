@@ -5421,14 +5421,14 @@ CLASS zabap2ui5_cl_xml_view IMPLEMENTATION.
                                          ( n = `fieldGroupIds` v = fieldGroupIds )
                                          ( n = `groupType` v = groupType )
                                          ( n = `visible` v = zabap2ui5_cl_util=>boolean_abap_2_json( visible ) )
-                                         ( n = `tooltip` v =  tooltip )
+                                         ( n = `tooltip` v = tooltip )
                                          ( n = `items` v = items )
                                          ( n = `press` v = press ) ) ).
   ENDMETHOD.
 
   METHOD avatar_group_item.
     result = me.
-    _generic( name   = `AvatarGroupItem`
+    _generic( name            = `AvatarGroupItem`
                        ns     = `f`
                        t_prop = VALUE #( ( n = `id` v = id )
                                          ( n = `busy` v = busy )
@@ -5438,8 +5438,8 @@ CLASS zabap2ui5_cl_xml_view IMPLEMENTATION.
                                          ( n = `fieldGroupIds` v = fieldGroupIds )
                                          ( n = `initials` v = initials )
                                          ( n = `src` v = src )
-                                         ( n = `visible` v =  visible )
-                                         ( n = `tooltip` v =  tooltip ) ) ).
+                                         ( n = `visible` v = visible )
+                                         ( n = `tooltip` v = tooltip ) ) ).
   ENDMETHOD.
 
   METHOD axis_time_strategy.
@@ -5997,7 +5997,7 @@ CLASS zabap2ui5_cl_xml_view IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD comparison_micro_chart.
-    result = _generic( name   = `ComparisonMicroChart`
+    result = _generic( name  = `ComparisonMicroChart`
                       ns     = `mchart`
                       t_prop = VALUE #( ( n = `colorPalette`  v = colorpalette )
                                         ( n = `press`       v = press )
@@ -6020,7 +6020,7 @@ CLASS zabap2ui5_cl_xml_view IMPLEMENTATION.
                                          ( n = `press`       v = press )
                                          ( n = `displayValue`        v = displayValue )
                                          ( n = `title`      v = title )
-                                         ( n = `value`      v = value )  ) ).
+                                         ( n = `value`      v = value ) ) ).
   ENDMETHOD.
 
   METHOD constructor.
@@ -6114,7 +6114,7 @@ CLASS zabap2ui5_cl_xml_view IMPLEMENTATION.
 
   METHOD custom_layout.
     result = _generic( name = `customLayout`
-                       ns   = ns  ).
+                       ns   = ns ).
   ENDMETHOD.
 
   METHOD custom_list_item.
@@ -6255,8 +6255,8 @@ CLASS zabap2ui5_cl_xml_view IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD drag_drop_config.
-    result = _generic( name = `dragDropConfig`
-                          ns   = ns
+    result = _generic( name  = `dragDropConfig`
+                          ns = ns
                        ).
   ENDMETHOD.
 
@@ -6988,9 +6988,9 @@ CLASS zabap2ui5_cl_xml_view IMPLEMENTATION.
 
   METHOD harvey_ball_micro_chart.
 
-    result = _generic( name   = `HarveyBallMicroChart`
-              ns     = `mchart`
-              t_prop = VALUE #( ( n = `colorPalette`  v = colorpalette )
+    result = _generic( name = `HarveyBallMicroChart`
+              ns            = `mchart`
+              t_prop        = VALUE #( ( n = `colorPalette`  v = colorpalette )
                                 ( n = `press`       v = press )
                                 ( n = `size`        v = size )
                                 ( n = `height`      v = height )
@@ -7750,7 +7750,7 @@ CLASS zabap2ui5_cl_xml_view IMPLEMENTATION.
                        t_prop = VALUE #(
                            ( n = `id`  v = id )
                            ( n = `autoAdjustHeight`  v = zabap2ui5_cl_util=>boolean_abap_2_json( autoadjustheight ) )
-                           ( n = `showHome`  v = zabap2ui5_cl_util=>boolean_abap_2_json( showHome )  )  ) ).
+                           ( n = `showHome`  v = zabap2ui5_cl_util=>boolean_abap_2_json( showHome ) ) ) ).
 
   ENDMETHOD.
 
@@ -9957,7 +9957,7 @@ CLASS zabap2ui5_cl_xml_view IMPLEMENTATION.
     DATA(lv_name) = COND #(
         WHEN ns = 'table' THEN 'toolbar'
         WHEN ns = 'form'  THEN 'toolbar'
-        ELSE                   `Toolbar` ).
+        ELSE `Toolbar` ).
     result = _generic( name   = lv_name
                        ns     = ns
                        t_prop = VALUE #( ( n = `active`  v = zabap2ui5_cl_util=>boolean_abap_2_json( active ) )
@@ -10609,7 +10609,7 @@ CLASS zabap2ui5_cl_xml_view IMPLEMENTATION.
           ( n = `trm`               v = `sap.ui.table.rowmodes` )
           ( n = `smi`               v = `sap.ui.comp.smartmultiinput` ) ).
 
-      LOOP AT mt_ns REFERENCE INTO DATA(lr_ns) WHERE     table_line IS NOT INITIAL
+      LOOP AT mt_ns REFERENCE INTO DATA(lr_ns) WHERE table_line IS NOT INITIAL
                                                      AND table_line <> `mvc`
                                                      AND table_line <> `core`.
         TRY.
@@ -10947,7 +10947,7 @@ CLASS zabap2ui5_cl_xml_view IMPLEMENTATION.
   METHOD control_configuration.
 
     result = me.
-    _generic( name   = `ControlConfiguration`
+    _generic( name             = `ControlConfiguration`
                         ns     = `smartFilterBar`
                         t_prop = VALUE #( ( n = `id`  v = id )
                                           ( n = `key`  v = key )
@@ -10959,7 +10959,7 @@ CLASS zabap2ui5_cl_xml_view IMPLEMENTATION.
 
   METHOD smart_table.
 
-    result = _generic( name   = `SmartTable`
+    result = _generic( name    = `SmartTable`
                         ns     = `smartTable`
                         t_prop = VALUE #(
                         ( n = `id`  v = id )
@@ -10972,37 +10972,37 @@ CLASS zabap2ui5_cl_xml_view IMPLEMENTATION.
                                           ( n = `useExportToExcel`  v = zabap2ui5_cl_util=>boolean_abap_2_json( useExportToExcel ) )
                                           ( n = `useTablePersonalisation`  v = zabap2ui5_cl_util=>boolean_abap_2_json( useTablePersonalisation ) )
                                           ( n = `header`  v = header )
-                                          ( n = `showRowCount`  v =  zabap2ui5_cl_util=>boolean_abap_2_json( showRowCount ) )
-                                          ( n = `enableExport`  v =  zabap2ui5_cl_util=>boolean_abap_2_json( enableExport ) )
-                                          ( n = `enableAutoBinding`  v =  zabap2ui5_cl_util=>boolean_abap_2_json( enableAutoBinding ) )
+                                          ( n = `showRowCount`  v = zabap2ui5_cl_util=>boolean_abap_2_json( showRowCount ) )
+                                          ( n = `enableExport`  v = zabap2ui5_cl_util=>boolean_abap_2_json( enableExport ) )
+                                          ( n = `enableAutoBinding`  v = zabap2ui5_cl_util=>boolean_abap_2_json( enableAutoBinding ) )
                                           ) ).
 
   ENDMETHOD.
 
   METHOD _control_configuration.
 
-    result = _generic( name   = `controlConfiguration`
-                        ns     = `smartFilterBar`
+    result = _generic( name = `controlConfiguration`
+                        ns  = `smartFilterBar`
                       ).
 
   ENDMETHOD.
 
   METHOD viz_dataset.
-    result = _generic( name   = 'dataset'
-                       ns     = 'viz' ).
+    result = _generic( name = 'dataset'
+                       ns   = 'viz' ).
   ENDMETHOD.
 
 
   METHOD viz_dimensions.
-    result = _generic( name   = 'dimensions'
-                       ns     = 'viz.data' ).
+    result = _generic( name = 'dimensions'
+                       ns   = 'viz.data' ).
   ENDMETHOD.
 
 
   METHOD viz_dimension_definition.
     result = _generic( name   = 'DimensionDefinition'
                        ns     = 'viz.data'
-                       t_prop = VALUE #(  ( n = `axis`          v = axis )
+                       t_prop = VALUE #( ( n = `axis`          v = axis )
                                           ( n = `dataType`      v = datatype )
                                           ( n = `displayValue`  v = displayvalue )
                                           ( n = `identity`      v = identity )
@@ -11013,15 +11013,15 @@ CLASS zabap2ui5_cl_xml_view IMPLEMENTATION.
 
 
   METHOD viz_feeds.
-    result = _generic( name   = 'feeds'
-                       ns     = 'viz' ).
+    result = _generic( name = 'feeds'
+                       ns   = 'viz' ).
   ENDMETHOD.
 
 
   METHOD viz_feed_item.
     result = _generic( name   = 'FeedItem'
                        ns     = 'viz.feeds'
-                       t_prop = VALUE #(  ( n = `id`      v = id )
+                       t_prop = VALUE #( ( n = `id`      v = id )
                                           ( n = `uid`     v = uid )
                                           ( n = `type`    v = type )
                                           ( n = `values ` v = values ) ) ).
@@ -11038,36 +11038,36 @@ CLASS zabap2ui5_cl_xml_view IMPLEMENTATION.
   METHOD viz_frame.
     DATA(lv_vizproperties) = ``.
     IF vizproperties IS INITIAL.
-      lv_vizproperties = `{` && |\n|  &&
-      `"plotArea": {` && |\n|  &&
-          `"dataLabel": {` && |\n|  &&
-              `"formatString": "",` && |\n|  &&
-              `"visible": false` && |\n|  &&
-          `}` && |\n|  &&
-      `},` && |\n|  &&
-      `"valueAxis": {` && |\n|  &&
-          `"label": {` && |\n|  &&
-              `"formatString": ""` && |\n|  &&
-          `},` && |\n|  &&
-          `"title": {` && |\n|  &&
-              `"visible": false` && |\n|  &&
-          `}` && |\n|  &&
-      `},` && |\n|  &&
-      `"categoryAxis": {` && |\n|  &&
-          `"title": {` && |\n|  &&
-              `"visible": false` && |\n|  &&
-          `}` && |\n|  &&
-      `},` && |\n|  &&
-      `"title": {` && |\n|  &&
-          `"visible": false,` && |\n|  &&
-          `"text": ""` && |\n|  &&
-      `}` && |\n|  &&
+      lv_vizproperties = `{` && |\n| &&
+      `"plotArea": {` && |\n| &&
+          `"dataLabel": {` && |\n| &&
+              `"formatString": "",` && |\n| &&
+              `"visible": false` && |\n| &&
+          `}` && |\n| &&
+      `},` && |\n| &&
+      `"valueAxis": {` && |\n| &&
+          `"label": {` && |\n| &&
+              `"formatString": ""` && |\n| &&
+          `},` && |\n| &&
+          `"title": {` && |\n| &&
+              `"visible": false` && |\n| &&
+          `}` && |\n| &&
+      `},` && |\n| &&
+      `"categoryAxis": {` && |\n| &&
+          `"title": {` && |\n| &&
+              `"visible": false` && |\n| &&
+          `}` && |\n| &&
+      `},` && |\n| &&
+      `"title": {` && |\n| &&
+          `"visible": false,` && |\n| &&
+          `"text": ""` && |\n| &&
+      `}` && |\n| &&
   `}`.
     ELSE.
       lv_vizproperties = vizproperties.
     ENDIF.
 
-    result = _generic(  name   = 'VizFrame'
+    result = _generic( name    = 'VizFrame'
                         ns     = 'viz'
                         t_prop = VALUE #( ( n = `id`                v = id )
                                           ( n = `legendVisible`     v = legendvisible )
@@ -11085,14 +11085,14 @@ CLASS zabap2ui5_cl_xml_view IMPLEMENTATION.
 
 
   METHOD viz_measures.
-    result = _generic( name   = 'measures'
-                       ns     = 'viz.data' ).
+    result = _generic( name = 'measures'
+                       ns   = 'viz.data' ).
   ENDMETHOD.
 
   METHOD viz_measure_definition.
     result = _generic( name   = 'MeasureDefinition'
                        ns     = 'viz.data'
-                       t_prop = VALUE #(  ( n = `format`    v = format )
+                       t_prop = VALUE #( ( n = `format`    v = format )
                                           ( n = `group`     v = group )
                                           ( n = `identity`  v = identity )
                                           ( n = `name`      v = name )
